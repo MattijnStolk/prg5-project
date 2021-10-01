@@ -15,11 +15,9 @@ class CreateCategoriesTable extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->boolean('work');
-            $table->boolean('progress');
-            $table->boolean('past-projects');
-            $table->boolean('school');
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('edited_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->string('name');
         });
     }
 
