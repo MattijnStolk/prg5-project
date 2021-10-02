@@ -2,24 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class AboutController extends Controller
 {
     public function index(){
-        $title = 'getgoodlol';
-        $cars = [
-            [
-            'brand' => 'mazda',
-            'model' => 'mx5',
-            ],
-            [
-            'brand' => 'citroen',
-            'model' => 'c4 cactus'
-            ]
-        ];
 
 
-        return view('about', compact('title', 'cars'));
+        $categories = Category::all();
+
+
+        return view('about', compact('categories'));
     }
 }

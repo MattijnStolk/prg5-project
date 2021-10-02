@@ -8,11 +8,9 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>{{ $title }}</h1>
-    <p>this is the about page</p>
-    @foreach($cars as $car)
-        <p>Merk = {{ $car['brand'] }}</p>
-        <p>En model = {{ $car['model'] }}</p>
+    <h1>this is the about page</h1>
+    @foreach($categories as $category)
+        <p> {{ $category->name }}</p>
     @endforeach
 </body>
 </html>
