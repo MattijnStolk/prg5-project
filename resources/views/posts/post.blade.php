@@ -8,9 +8,26 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>this is the about page</h1>
-    @foreach($categories as $category)
-        <p> {{ $category->name }}</p>
-    @endforeach
+<article>
+    <h1>
+        <p>
+            {{ $post->title }}
+        </p>
+    </h1>
+    <div>
+        <p>
+            {{ $post->content }} <br>
+        <p>this is post number {{ $post->id }}</p>
+        </p>
+    </div>
+    <div>
+        <a href="/posts">
+            go back
+        </a>
+    </div>
+</article>
 </body>
 </html>
+
+
+
