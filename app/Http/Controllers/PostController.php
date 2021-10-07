@@ -10,16 +10,17 @@ class PostController extends Controller
     //get the right id from the url
     //send the right post to post.blade
     function index($id){
-        $posts = Post::all();
+        $posts = Post::findOrFail($id);
 
-        $correctPost = '';
-        foreach ($posts as $key => $post){
-            if ($post->id == $id){
-                $correctPost = $post;
-            }
-        }
+//        $correctPost = '';
+//        foreach ($posts as $key => $post){
+//            if ($post->id == $id){
+//                $correctPost = $post;
+//            }
+//        }
+
         return view('posts/post', [
-            'post' => $correctPost
+            'post' => $posts
         ]);
     }
     function showAllPosts(){
@@ -29,4 +30,21 @@ class PostController extends Controller
             'posts' => $posts
         ]);
     }
+
+    function createComment($id){
+        $post = Post::findOrFail($id);
+
+        return view('posts.createComment', [
+            'post' => $post
+        ]);
+    }
+
+    function success($id){
+        $post = Post::findOrFail($id);
+
+        return view('posts.successPost', [
+            'post' => $post
+        ]);
+    }
+
 }

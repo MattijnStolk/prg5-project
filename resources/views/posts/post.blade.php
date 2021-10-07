@@ -15,16 +15,29 @@
         </p>
     </h1>
     <div>
-        <p>
-            {{ $post->content }} <br>
+        <p>{{ $post->content }}</p>
         <p>this is post number {{ $post->id }}</p>
-        </p>
+
+    </div>
+    <div>
+        @yield('successPost')
+        @if(!Auth::check())
+            <a href="/login"> login </a>
+        @endif
+        @auth()
+        <a href="/post/createComment/{{ $post->id }}">
+            addcomment
+        </a>
+
+        @yield('addComment')
+        @endauth
     </div>
     <div>
         <a href="/posts">
             go back
         </a>
     </div>
+
 </article>
 </body>
 </html>

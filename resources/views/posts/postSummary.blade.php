@@ -13,6 +13,7 @@
     @foreach($posts as $post)
         <p>{{ $post -> title }}</p>
         <p>{{ $post -> content }}</p>
+        <a href="post/{{$post->id}}">go to post</a>
     @endforeach
 </div>
 
