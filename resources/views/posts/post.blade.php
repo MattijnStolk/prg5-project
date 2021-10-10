@@ -37,6 +37,9 @@
             go back
         </a>
     </div>
+    <div>
+        @dd($comments)
+    </div>
 
 </article>
 </body>

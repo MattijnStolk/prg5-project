@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -11,17 +12,19 @@ class PostController extends Controller
     //send the right post to post.blade
     function index($id){
         $posts = Post::findOrFail($id);
+        //$comments = Comment::where('post_id','=' , $id);
+        $comments = Comment::all()->where('post_id','=' , $id);
 
-//        $correctPost = '';
-//        foreach ($posts as $key => $post){
-//            if ($post->id == $id){
-//                $correctPost = $post;
-//            }
-//        }
+        foreach ($comments as $comment){
+            echo $comment;
+        }
 
-        return view('posts/post', [
-            'post' => $posts
-        ]);
+        dd($comments);
+
+//        return view('posts/post', [
+//            'post' => $posts,
+//            'comments' => $comments
+//        ]);
     }
     function showAllPosts(){
         $posts =  Post::all();

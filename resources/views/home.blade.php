@@ -15,6 +15,8 @@
                     @endif
 
                     {{ __('You are logged in!') }}
+                        <br>
+                        <a href="posts">go to all posts</a>
                 </div>
             </div>
         </div>
