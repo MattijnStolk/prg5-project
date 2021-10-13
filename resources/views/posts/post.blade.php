@@ -20,16 +20,24 @@
 
     </div>
     <div>
-        @yield('successPost')
         @if(!Auth::check())
-            <a href="/login"> login </a>
+            <p> <a href="/login">login</a> to create a comment! </p>
         @endif
         @auth()
-        <a href="/post/createComment/{{ $post->id }}">
-            addcomment
-        </a>
+            <form action="{{route('comment.store')}}" method="POST">
+                @csrf
 
-        @yield('addComment')
+                <input type="text" name="content">
+                @error('content') <p> {{ $message }} </p> @enderror
+
+                <input type="hidden" name="post_id" value="{{ $post->id }}">
+                @error('post_id') <p> {{ $message }} </p> @enderror
+
+                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                @error('user_id') <p> {{ $message }} </p> @enderror
+
+                <input type="submit">
+            </form>
         @endauth
     </div>
     <div>
@@ -38,7 +46,10 @@
         </a>
     </div>
     <div>
-        @dd($comments)
+        <h2>comments</h2>
+        @foreach($comments as $comment)
+            <p>{{ $comment->content }}</p>
+        @endforeach
     </div>
 
 </article>

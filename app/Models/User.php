@@ -74,4 +74,8 @@ class User extends Authenticatable
         //'created_at' => 'datetime',
         //'edited at' => 'datetime'
     ];
+
+    public function posts(){
+        return $this->belongsToMany(Post::class);
+    }
 }

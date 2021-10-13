@@ -22,8 +22,20 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereTitle($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Comment[] $comments
+ * @property-read int|null $comments_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
+ * @property-read int|null $users_count
  */
 class Post extends Model
 {
     use HasFactory;
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
+
+    public function users(){
+        return $this->hasMany(User::class);
+    }
 }

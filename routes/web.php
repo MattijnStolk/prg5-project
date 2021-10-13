@@ -25,9 +25,7 @@ Route::get('/post/{id}', [PostController::class, 'index']);
 
 Route::get('/posts', [PostController::class, 'showAllPosts']);
 
-Route::get('/post/createComment/{id}', [PostController::class, 'createComment']);
-
-Route::get('post/success/{id}', [PostController::class, 'success']);
+//Route::get('/comment/test/{id}', [CommentController::class, 'show']);
 
 Route::resource('/comment', CommentController::class);
 

@@ -15,39 +15,19 @@ class PostController extends Controller
         //$comments = Comment::where('post_id','=' , $id);
         $comments = Comment::all()->where('post_id','=' , $id);
 
-        foreach ($comments as $comment){
-            echo $comment;
-        }
+        return view('posts/postSummary', compact('posts', 'comments'));
 
-        dd($comments);
-
-//        return view('posts/post', [
-//            'post' => $posts,
-//            'comments' => $comments
-//        ]);
     }
     function showAllPosts(){
         $posts =  Post::all();
 
-        return view('posts/postSummary', [
-            'posts' => $posts
-        ]);
-    }
-
-    function createComment($id){
-        $post = Post::findOrFail($id);
-
-        return view('posts.createComment', [
-            'post' => $post
-        ]);
+        return view('posts/postSummary', compact('posts'));
     }
 
     function success($id){
         $post = Post::findOrFail($id);
 
-        return view('posts.successPost', [
-            'post' => $post
-        ]);
+        return view('posts.successPost', compact('post'));
     }
 
 }
