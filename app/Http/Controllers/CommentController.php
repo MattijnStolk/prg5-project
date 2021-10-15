@@ -51,7 +51,7 @@ class CommentController extends Controller
             'user_id' => $request->input('user_id')
         ]);
 
-        return redirect('post/success/' . $request->post_id);
+        return redirect('post/' . $request->post_id);
     }
 
     function createComment($id){
@@ -68,16 +68,14 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        $comments = DB::table('comments')
-            ->join('posts', 'comments.post_id', '=', 'posts.id')
-            ->join('users', 'comments.user_id', '=', 'users.id')
-            ->select('comments.*')
-            ->where('posts.id', '=', $id)
-            ->get();
+        return DB::table('comments')
+           ->join('posts', 'comments.post_id', '=', 'posts.id')
+           ->join('users', 'comments.user_id', '=', 'users.id')
+           ->select('comments.*')
+           ->where('posts.id', '=', $id)
+           ->get();
 
-        $post = Post::findOrFail($id);
 
-            return view('posts/post', compact('comments', 'post'));
         //join statement met de 2 tabellen en welke info welke is
         //select welke info je nodig hebt van allei de tabellen
         //select waar je deze info nodig hebt

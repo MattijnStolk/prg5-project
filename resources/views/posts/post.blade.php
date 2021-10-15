@@ -49,6 +49,11 @@
         <h2>comments</h2>
         @foreach($comments as $comment)
             <p>{{ $comment->content }}</p>
+            <p>written by {{ $comment->user->name }}</p>
+            @if($comment->user->id == Auth::user()->id)
+                <a href="">edit (werkt absoluut wel klik er vooral op)</a>
+            @endif
+            <br>
         @endforeach
     </div>
 

@@ -16,9 +16,14 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('edited_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->string('title');
             $table->text('content');
+            $table->foreignId('user_id')
+                ->nullable()
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

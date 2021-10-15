@@ -35,7 +35,13 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function users(){
-        return $this->hasMany(User::class);
+    public function user(){
+        return $this->belongsTo(User::class);
     }
+
+    protected $fillable= [
+            'title',
+            'content',
+            'user_id'
+        ];
 }

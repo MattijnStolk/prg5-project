@@ -5,18 +5,35 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
     //get the right id from the url
     //send the right post to post.blade
     function index($id){
-        $posts = Post::findOrFail($id);
+        $post = Post::findOrFail($id);
         //$comments = Comment::where('post_id','=' , $id);
-        $comments = Comment::all()->where('post_id','=' , $id);
+        //$comments = Comment::all()->where('post_id','=' , $id);
+        $commentsClass = new CommentController();
+        $comments = $commentsClass->show($id);
 
-        return view('posts/postSummary', compact('posts', 'comments'));
+        //dd($comments);
 
+        //dd($posts);
+
+        return view('posts/post', compact('post', 'comments'));
+
+    }
+
+    function show($id) {
+        // toont details van een Post
+        $post = Post::findOrFail($id);
+
+        //$post->comments()->first()->user->name;
+        $comments = $post->comments;
+
+        return view('posts.post', compact('post', 'comments'));
     }
     function showAllPosts(){
         $posts =  Post::all();
@@ -24,10 +41,26 @@ class PostController extends Controller
         return view('posts/postSummary', compact('posts'));
     }
 
-    function success($id){
-        $post = Post::findOrFail($id);
+    function create(){
+        if(!Auth::user()->is_admin){
+            return redirect('posts');
+        }
+        return view('posts.createPost');
+    }
 
-        return view('posts.successPost', compact('post'));
+    function store(Request $request){
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'user_id' => 'required'
+        ]);
+
+        $storePost = Post::create([
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+            'user_id' => $request->input('user_id')
+        ]);
+        return redirect('/posts');
     }
 
 }

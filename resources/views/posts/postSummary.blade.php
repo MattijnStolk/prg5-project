@@ -9,6 +9,10 @@
 </head>
 <body>
 <h1>this is the about page</h1>
+@if(Auth::user()->is_admin)
+    <a href="createpost">create a new post</a>
+@endif
+
 <div>
     @foreach($posts as $post)
         <p>{{ $post -> title }}</p>

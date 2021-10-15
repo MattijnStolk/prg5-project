@@ -35,8 +35,11 @@ class Comment extends Model
             'user_id'
         ];
 
-    public function posts(){
+    public function post(){
         return $this->belongsToMany(Post::class);
     }
 
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

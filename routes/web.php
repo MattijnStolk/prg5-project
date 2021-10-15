@@ -21,7 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/post/{id}', [PostController::class, 'index']);
+Route::get('/post/{id}', [PostController::class, 'show']);
 
 Route::get('/posts', [PostController::class, 'showAllPosts']);
 
@@ -29,6 +29,10 @@ Route::get('/posts', [PostController::class, 'showAllPosts']);
 
 Route::resource('/comment', CommentController::class);
 
+Route::resource('/storePost', PostController::class);
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/createpost', [PostController::class, 'create']);
