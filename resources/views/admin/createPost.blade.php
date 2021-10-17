@@ -8,13 +8,15 @@
     <title>Document</title>
 </head>
 <body>
-    <p>test</p>
+    <p>create new post</p>
     <form action="{{route('storePost.store')}}" method="POST">
         @csrf
-
+        <label for="title">Titel</label>
         <input type="text" name="title">
         @error('title') <p> {{ $message }}</p> @enderror
 
+        <br>
+        <label for="content">Content</label>
         <input type="text" name="content">
         @error('content') <p> {{ $message }} </p> @enderror
 

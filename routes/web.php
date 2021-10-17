@@ -31,8 +31,15 @@ Route::resource('/comment', CommentController::class);
 
 Route::resource('/storePost', PostController::class);
 
+Route::resource('/editStoredPost', PostController::class);
+
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/createpost', [PostController::class, 'create']);
+
+Route::get('/editpost/{id}', [PostController::class, 'edit']);
+
+

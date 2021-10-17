@@ -8,21 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-<h1>this is the about page</h1>
-@auth()
-    @if(Auth::user()->is_admin)
-    <a href="createpost">create a new post</a>
-    @endif
-@endauth
-
-<div>
-    @foreach($posts as $post)
-        <p>{{ $post -> title }}</p>
-        <p>{{ $post -> content }}</p>
-        <a href="post/{{$post->id}}">go to post</a>
-    @endforeach
-</div>
-
 
 </body>
 </html>

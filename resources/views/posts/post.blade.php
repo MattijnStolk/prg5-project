@@ -20,6 +20,15 @@
 
     </div>
     <div>
+        @auth()
+        @if(Auth::user()->is_admin)
+            <p>
+                Hi admin, <a href="/editpost/{{ $post->id }}">Edit this post</a>.
+            </p>
+        @endif
+        @endauth
+    </div>
+    <div>
         @if(!Auth::check())
             <p> <a href="/login">login</a> to create a comment! </p>
         @endif
@@ -50,9 +59,11 @@
         @foreach($comments as $comment)
             <p>{{ $comment->content }}</p>
             <p>written by {{ $comment->user->name }}</p>
-            @if($comment->user->id == Auth::user()->id)
-                <a href="">edit (werkt absoluut wel klik er vooral op)</a>
-            @endif
+            @auth()
+                @if($comment->user->id == Auth::user()->id)
+                    <a href="">edit (werkt absoluut wel klik er vooral op)</a>
+                @endif
+            @endauth
             <br>
         @endforeach
     </div>

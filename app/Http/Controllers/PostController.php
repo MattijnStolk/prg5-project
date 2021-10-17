@@ -9,20 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    //get the right id from the url
-    //send the right post to post.blade
     function index($id){
-        $post = Post::findOrFail($id);
-        //$comments = Comment::where('post_id','=' , $id);
-        //$comments = Comment::all()->where('post_id','=' , $id);
-        $commentsClass = new CommentController();
-        $comments = $commentsClass->show($id);
-
-        //dd($comments);
-
-        //dd($posts);
-
-        return view('posts/post', compact('post', 'comments'));
 
     }
 
@@ -45,7 +32,7 @@ class PostController extends Controller
         if(!Auth::user()->is_admin){
             return redirect('posts');
         }
-        return view('posts.createPost');
+        return view('admin.createPost');
     }
 
     function store(Request $request){
@@ -61,6 +48,20 @@ class PostController extends Controller
             'user_id' => $request->input('user_id')
         ]);
         return redirect('/posts');
+    }
+
+    public function edit($id)
+    {
+        if (!Auth::check() || !Auth::user()->is_admin) return redirect('posts');
+        $post = Post::findOrFail($id);
+
+
+        return view('admin/editPost', compact('post'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        //
     }
 
 }
