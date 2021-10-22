@@ -1,14 +1,5 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <form action="{{route('editStoredPost.update')}}" method="POST">
+@extends('layouts.adminLayout')
+    <form action="{{route('storePost.update', $post->id)}}" method="POST">
         @csrf
 
         <label for="title">Titel</label>
@@ -20,9 +11,7 @@
         <input type="text" name="content" value="{{ $post->content }}">
         @error('content') <p> {{ $message }} </p> @enderror
 
-        <input type="hidden" value="id" value="{{ $post->id }}">
+        {{ method_field('PUT') }}
 
         <input type="submit">
     </form>
-</body>
-</html>

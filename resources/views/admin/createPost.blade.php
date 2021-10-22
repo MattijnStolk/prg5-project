@@ -1,13 +1,4 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+@extends('layouts.adminLayout')
     <p>create new post</p>
     <form action="{{route('storePost.store')}}" method="POST">
         @csrf
@@ -23,10 +14,14 @@
         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
         @error('user_id') <p> {{ $message }} </p> @enderror
 
+        <br>
+        @foreach($categories as $category)
+            <label for="categories[]">{{ $category->name }}</label>
+            <input type="checkbox" name="categories[]" value="{{ $category->id }}">
+            <br>
+        @endforeach
+
         <input type="submit">
     </form>
-    <a href="/posts">Go back</a>
 
-</body>
-</html>
 
