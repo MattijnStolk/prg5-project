@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -16,11 +17,12 @@ class PostController extends Controller
     function show($id) {
         // toont details van een Post
         $post = Post::findOrFail($id);
+        $categories = $post->categories;
 
         //$post->comments()->first()->user->name;
         $comments = $post->comments;
 
-        return view('posts.post', compact('post', 'comments'));
+        return view('posts.post', compact('post', 'comments', 'categories'));
     }
     function showAllPosts(){
         $posts =  Post::all();
@@ -32,7 +34,8 @@ class PostController extends Controller
         if(!Auth::user()->is_admin){
             return redirect('posts');
         }
-        return view('admin.createPost');
+        $categories = Category::all();
+        return view('admin.createPost', compact('categories'));
     }
 
     function store(Request $request){
@@ -47,6 +50,9 @@ class PostController extends Controller
             'content' => $request->input('content'),
             'user_id' => $request->input('user_id')
         ]);
+
+        $storePost->categories()->sync($request->categories);
+
         return redirect('/posts');
     }
 
@@ -61,7 +67,18 @@ class PostController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required'
+        ]);
+
+        $correctPost = Post::findOrFail($id);
+
+        $correctPost->update($request->except(['_token', '_method']));
+
+        $request->session()->flash('success', 'Post is bewerkt');
+
+        return redirect('/post/'.$id);
     }
 
 }

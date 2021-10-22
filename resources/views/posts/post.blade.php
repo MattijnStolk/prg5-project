@@ -6,8 +6,10 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="{{ asset('css/app.css')  }}">
 </head>
 <body>
+@include('partials.alerts')
 <article>
     <h1>
         <p>
@@ -18,6 +20,12 @@
         <p>{{ $post->content }}</p>
         <p>this is post number {{ $post->id }}</p>
 
+    </div>
+    <div>
+        This post has the following categories
+        @foreach($categories as $category)
+            <p> {{ $category->name }}</p>
+        @endforeach
     </div>
     <div>
         @auth()

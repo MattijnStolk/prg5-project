@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
@@ -17,22 +19,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [PostController::class, 'showAllPosts']);
 
 Route::get('/post/{id}', [PostController::class, 'show']);
 
 Route::get('/posts', [PostController::class, 'showAllPosts']);
 
-//Route::get('/comment/test/{id}', [CommentController::class, 'show']);
-
 Route::resource('/comment', CommentController::class);
 
 Route::resource('/storePost', PostController::class);
 
-Route::resource('/editStoredPost', PostController::class);
+Route::resource('/user', UserController::class);
 
+Route::resource('/category', CategoryController::class);
+
+Route::get('/profile/{id}', [UserController::class, 'show']);
+
+Route::get('/profile/edit/{id}', [UserController::class, 'edit']);
 
 Auth::routes();
 
@@ -41,5 +44,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/createpost', [PostController::class, 'create']);
 
 Route::get('/editpost/{id}', [PostController::class, 'edit']);
+
+Route::get('/category/create', [CategoryController::class, 'create']);
 
 
