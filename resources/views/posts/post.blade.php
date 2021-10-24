@@ -10,6 +10,7 @@
 </head>
 <body>
 @include('partials.alerts')
+
 <article>
     <h1>
         <p>

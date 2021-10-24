@@ -26,6 +26,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read int|null $comments_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
  * @property-read int|null $users_count
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property int|null $user_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $categories
+ * @property-read int|null $categories_count
+ * @property-read \App\Models\User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereUserId($value)
  */
 class Post extends Model
 {
@@ -40,7 +47,7 @@ class Post extends Model
     }
 
     public function categories(){
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class)->withPivot(['post_id', 'category_id']);
     }
 
     protected $fillable= [

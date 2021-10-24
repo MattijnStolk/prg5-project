@@ -26,8 +26,9 @@ class PostController extends Controller
     }
     function showAllPosts(){
         $posts =  Post::all();
+        $categories = Category::all();
 
-        return view('posts/postSummary', compact('posts'));
+        return view('posts/postSummary', compact('posts', 'categories'));
     }
 
     function create(){

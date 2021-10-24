@@ -20,6 +20,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereName($value)
  * @mixin \Eloquent
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Post[] $posts
+ * @property-read int|null $posts_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
  */
 class Category extends Model
 {

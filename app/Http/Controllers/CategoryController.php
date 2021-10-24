@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,7 +27,7 @@ class CategoryController extends Controller
     public function create()
     {
         if(!Auth::user()->is_admin){
-            return redirect('posts');
+            return redirect('/posts');
         }
         return view('admin.createCategory');
     }
@@ -39,6 +40,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Auth::user()->is_admin){
+            return redirect('/posts');
+        }
+
         $request->validate([
             'name' => 'required'
         ]);
@@ -58,7 +63,13 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        //you get the id of the category
+        //get the db results
+        //return the results to the corresponding view
+        $posts = Category::with('posts')->find($id)->posts;
+
+
+        return view('posts.showPostCategory', compact('posts'));
     }
 
     /**

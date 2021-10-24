@@ -45,6 +45,6 @@ Route::get('/createpost', [PostController::class, 'create']);
 
 Route::get('/editpost/{id}', [PostController::class, 'edit']);
 
-Route::get('/category/create', [CategoryController::class, 'create']);
+Route::get('/category/{id}', [CategoryController::class, 'show']);
 
 
