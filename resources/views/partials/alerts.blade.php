@@ -4,3 +4,8 @@
     </div>
 @endif
 
+@if(session('empty'))
+    <div class="alert alert-primary" role="alert">
+        <p>{{ session('empty') }}</p>
+    </div>
+@endif

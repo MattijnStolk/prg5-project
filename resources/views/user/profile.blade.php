@@ -12,5 +12,5 @@
 
 
 
-
+<a href="/home">log out</a>
 <a href="/profile/edit/{{$user->id}}">edit your profile</a>

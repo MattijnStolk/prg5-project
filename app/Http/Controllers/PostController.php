@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,6 +24,10 @@ class PostController extends Controller
         //$post->comments()->first()->user->name;
         $comments = $post->comments;
 
+        $data = User::where('created_at', '<=', Carbon::now()->subDays(2)->toDateTimeString())->get();
+
+        dd($data);
+
         return view('posts.post', compact('post', 'comments', 'categories'));
     }
     function showAllPosts(){
@@ -31,6 +37,7 @@ class PostController extends Controller
         return view('posts/postSummary', compact('posts', 'categories'));
     }
 
+<<<<<<< Updated upstream
     function showAdminLayout(){
         if (!Auth::check() || !Auth::user()->is_admin) return redirect('/posts');
         $posts = Post::all();
@@ -49,6 +56,25 @@ class PostController extends Controller
         $post->save();
 
         return redirect('/admin/layout');
+=======
+    function searchPost(Request $request){
+        $searchResult = $request->get('search');
+        if(isset($searchResult) && $searchResult !== ' '){
+            $categories = Category::all();
+
+            $contentQuery = Post::where('content', 'LIKE', '%'. $searchResult. '%');
+
+            $posts = Post::where('title', 'LIKE', '%'. $searchResult. '%')
+                ->union($contentQuery)
+                ->get();
+
+            $request->session()->flash('searched');
+
+            return view('posts/postSummary', compact('posts', 'categories'));
+        }else{
+            return redirect('/posts');
+        }
+>>>>>>> Stashed changes
     }
 
     function create(){

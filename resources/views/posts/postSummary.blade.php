@@ -18,7 +18,10 @@
         <a href="/home">Login of registreer</a>
     @endif
 </nav>
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 <article id="categories">
     <select name="" id="" onchange="location = this.value;">
 
@@ -29,11 +32,26 @@
     </select>
 </article>
 
+<form action="/search" method="GET" role="search">
+    <input type="text" name="search" placeholder="Search for posts" @if($_GET)value="{{ $_GET['search'] }}"@endif>
+    <input type="submit">
+</form>
+
+<a href="/posts">clear search</a>
+
 @auth()
     @if(Auth::user()->is_admin)
+<<<<<<< Updated upstream
         <a href="createpost">create a new post</a>
         <a href="/category/create">create new category</a>
         <a href="/admin/layout">Ga naar het post overzicht voor admins</a>
+=======
+        <div>
+            <a href="createpost">create a new post</a>
+            <br>
+            <a href="/category/create">create new category</a>
+        </div>
+>>>>>>> Stashed changes
     @endif
 @endauth
 

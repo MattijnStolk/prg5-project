@@ -33,6 +33,8 @@ Route::resource('/comment', CommentController::class);
 
 Route::resource('/storePost', PostController::class);
 
+Route::get('/search', [PostController::class, 'searchPost'])->name('searchPost');
+
 Route::resource('/user', UserController::class);
 
 Route::resource('/category', CategoryController::class);

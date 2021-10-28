@@ -11,7 +11,7 @@
         <input type="text" name="content" value="{{ $post->content }}">
         @error('content') <p> {{ $message }} </p> @enderror
 
-        {{ method_field('PUT') }}
+        {{ method_field('PATCH') }}
 
         <input type="submit">
     </form>
