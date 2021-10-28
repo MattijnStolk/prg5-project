@@ -12,6 +12,7 @@
     @yield('admin.createPost')
     @yield('admin.editPost')
     @yield('admin.createCategory')
+    @yield('admin.adminPanel')
 
     <br>
     <a href="/posts">Go back to all posts</a>

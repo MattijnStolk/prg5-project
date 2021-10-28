@@ -55,7 +55,7 @@ class CommentController extends Controller
     }
 
     function createComment($id){
-        $post = Post::findOrFail($id);
+        $post = Post::findOrFail($id)->where('is_active', '=', '1');
 
         return view('posts.createComment', compact('post'));
     }
@@ -68,12 +68,18 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        return DB::table('comments')
-           ->join('posts', 'comments.post_id', '=', 'posts.id')
-           ->join('users', 'comments.user_id', '=', 'users.id')
-           ->select('comments.*')
-           ->where('posts.id', '=', $id)
-           ->get();
+        $comments = Comment::wherePostId($id)->get();
+
+        dd($comments);
+
+        //return $comments;
+
+//            DB::table('comments')
+//           ->join('posts', 'comments.post_id', '=', 'posts.id')
+//           ->join('users', 'comments.user_id', '=', 'users.id')
+//           ->select('comments.*')
+//           ->where('posts.id', '=', $id)
+//           ->get();
 
 
         //join statement met de 2 tabellen en welke info welke is

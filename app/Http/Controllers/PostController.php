@@ -16,7 +16,7 @@ class PostController extends Controller
 
     function show($id) {
         // toont details van een Post
-        $post = Post::findOrFail($id);
+        $post = Post::where('id', '=', $id)->where('is_active', '=', 1)->firstOrFail();
         $categories = $post->categories;
 
         //$post->comments()->first()->user->name;
@@ -25,10 +25,30 @@ class PostController extends Controller
         return view('posts.post', compact('post', 'comments', 'categories'));
     }
     function showAllPosts(){
-        $posts =  Post::all();
+        $posts =  Post::where('is_active', '=', 1)->get();
         $categories = Category::all();
 
         return view('posts/postSummary', compact('posts', 'categories'));
+    }
+
+    function showAdminLayout(){
+        if (!Auth::check() || !Auth::user()->is_admin) return redirect('/posts');
+        $posts = Post::all();
+
+        return view('admin.adminPanel', compact('posts'));
+    }
+
+    function editActivePost(Request $request){
+        if (!Auth::check() || !Auth::user()->is_admin) return redirect('/posts');
+
+        $postid = $request->input('id');
+
+        $post = Post::findOrFail($postid);;
+
+        $post->is_active = !$post->is_active;
+        $post->save();
+
+        return redirect('/admin/layout');
     }
 
     function create(){

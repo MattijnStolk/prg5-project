@@ -19,6 +19,7 @@ class CreatePostsTable extends Migration
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->string('title');
             $table->text('content');
+            $table->boolean('is_active')->default(1);
             $table->foreignId('user_id')
                 ->nullable()
                 ->references('id')

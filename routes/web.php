@@ -25,6 +25,10 @@ Route::get('/post/{id}', [PostController::class, 'show']);
 
 Route::get('/posts', [PostController::class, 'showAllPosts']);
 
+Route::get('/admin/layout', [PostController::class, 'showAdminLayout']);
+
+Route::post('/admin/layout/edit', [PostController::class, 'editActivePost']);
+
 Route::resource('/comment', CommentController::class);
 
 Route::resource('/storePost', PostController::class);
