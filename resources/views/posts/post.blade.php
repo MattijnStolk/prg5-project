@@ -23,10 +23,12 @@
 
     </div>
     <div>
-        This post has the following categories
-        @foreach($categories as $category)
-            <p> {{ $category->name }}</p>
-        @endforeach
+        @if($categories->first())
+            <p>This post has the following categories</p>
+            @foreach($categories as $category)
+                <p> {{ $category->name }}</p>
+            @endforeach
+        @endif
     </div>
     <div>
         @auth()
@@ -42,20 +44,24 @@
             <p> <a href="/login">login</a> to create a comment! </p>
         @endif
         @auth()
-            <form action="{{route('comment.store')}}" method="POST">
-                @csrf
+            @if($allowedComment == 1)
+                <form action="{{route('comment.store')}}" method="POST">
+                    @csrf
 
-                <input type="text" name="content">
-                @error('content') <p> {{ $message }} </p> @enderror
+                    <input type="text" name="content">
+                    @error('content') <p> {{ $message }} </p> @enderror
 
-                <input type="hidden" name="post_id" value="{{ $post->id }}">
-                @error('post_id') <p> {{ $message }} </p> @enderror
+                    <input type="hidden" name="post_id" value="{{ $post->id }}">
+                    @error('post_id') <p> {{ $message }} </p> @enderror
 
-                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                @error('user_id') <p> {{ $message }} </p> @enderror
+                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                    @error('user_id') <p> {{ $message }} </p> @enderror
 
-                <input type="submit">
-            </form>
+                    <input type="submit">
+                </form>
+                @else
+                    <p>You must be registered longer than 1 day to make comment!</p>
+                @endif
         @endauth
     </div>
     <div>

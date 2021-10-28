@@ -17,18 +17,24 @@ class PostController extends Controller
     }
 
     function show($id) {
+        $allowedComment = 0;
         // toont details van een Post
         $post = Post::where('id', '=', $id)->where('is_active', '=', 1)->firstOrFail();
         $categories = $post->categories;
-
-        //$post->comments()->first()->user->name;
         $comments = $post->comments;
 
-        $data = User::where('created_at', '<=', Carbon::now()->subDays(2)->toDateTimeString())->get();
+        if (Auth::check()){
 
-        dd($data);
+            $data = User::where('id', '=', Auth::user()->id)
+                ->where('created_at', '<=', Carbon::now()->subDays(2)->toDateTimeString())
+                ->get();
 
-        return view('posts.post', compact('post', 'comments', 'categories'));
+            if ($data->first()){
+                $allowedComment = 1;
+            }
+        }
+
+        return view('posts.post', compact('post', 'comments', 'categories', 'allowedComment'));
     }
     function showAllPosts(){
         $posts =  Post::where('is_active', '=', 1)->get();
@@ -37,7 +43,6 @@ class PostController extends Controller
         return view('posts/postSummary', compact('posts', 'categories'));
     }
 
-<<<<<<< Updated upstream
     function showAdminLayout(){
         if (!Auth::check() || !Auth::user()->is_admin) return redirect('/posts');
         $posts = Post::all();
@@ -45,7 +50,8 @@ class PostController extends Controller
         return view('admin.adminPanel', compact('posts'));
     }
 
-    function editActivePost(Request $request){
+    function editActivePost(Request $request)
+    {
         if (!Auth::check() || !Auth::user()->is_admin) return redirect('/posts');
 
         $postid = $request->input('id');
@@ -56,7 +62,9 @@ class PostController extends Controller
         $post->save();
 
         return redirect('/admin/layout');
-=======
+
+    }
+
     function searchPost(Request $request){
         $searchResult = $request->get('search');
         if(isset($searchResult) && $searchResult !== ' '){
@@ -74,7 +82,6 @@ class PostController extends Controller
         }else{
             return redirect('/posts');
         }
->>>>>>> Stashed changes
     }
 
     function create(){
