@@ -37,8 +37,6 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $request->validate([
             'content' => 'required',
             'user_id' => 'required',
@@ -68,24 +66,7 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        $comments = Comment::wherePostId($id)->get();
-
-        dd($comments);
-
-        //return $comments;
-
-//            DB::table('comments')
-//           ->join('posts', 'comments.post_id', '=', 'posts.id')
-//           ->join('users', 'comments.user_id', '=', 'users.id')
-//           ->select('comments.*')
-//           ->where('posts.id', '=', $id)
-//           ->get();
-
-
-        //join statement met de 2 tabellen en welke info welke is
-        //select welke info je nodig hebt van allei de tabellen
-        //select waar je deze info nodig hebt
-        //get()
+        //
     }
 
     /**

@@ -28,4 +28,18 @@ use Illuminate\Database\Eloquent\Model;
 class Like extends Model
 {
     use HasFactory;
+
+    function post(){
+        return $this->belongsTo(Post::class);
+    }
+
+    function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    protected $fillable= [
+        'user_id',
+        'post_id',
+        'is_positive'
+    ];
 }

@@ -47,15 +47,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //show info about the user
-        //first get info from db
-
-
         $user = User::findOrFail($id);
 
         if (!Auth::check() || $user->id !== Auth::user()->id) return redirect('/posts');
-
-        //dd(Auth::check(), Auth::user()->id, $user->id);
 
         return view('user.profile', compact('user'));
     }
@@ -71,8 +65,6 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         if (!Auth::check() || !$user->id == Auth::user()->id) return redirect('/posts');
-
-
 
         return view('user.editProfile', compact('user'));
     }

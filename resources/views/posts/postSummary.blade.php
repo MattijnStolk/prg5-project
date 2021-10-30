@@ -20,27 +20,27 @@
 </nav>
 <article id="categories">
     <select name="" id="" onchange="location = this.value;">
-
+        <option value="" disabled selected>Select a category!</option>
     @foreach($categories as $category)
-{{--        <a href="/category/{{ $category->id }}">{{$category->name}}</a>--}}
         <option value="/category/{{ $category->id }}"> {{$category->name}}</option>
     @endforeach
     </select>
 </article>
 
-<form action="/search" method="GET" role="search">
-    <input type="text" name="search" placeholder="Search for posts" @if($_GET)value="{{ $_GET['search'] }}"@endif>
-    <input type="submit">
-</form>
-
-<a href="/posts">clear search</a>
+<div>
+    <form action="/search" method="GET" role="search">
+        <input type="text" name="search" placeholder="Search for posts" @if($_GET)value="{{ $_GET['search'] }}"@endif>
+        <input type="submit">
+    </form>
+    <a href="/posts">clear search</a>
+    <br>
+</div>
 
 @auth()
     @if(Auth::user()->is_admin)
-        <a href="createpost">create a new post</a>
-        <a href="/category/create">create new category</a>
-        <a href="/admin/layout">Ga naar het post overzicht voor admins</a>
         <div>
+            <a href="/admin/layout">Ga naar het post overzicht voor admins</a>
+            <br>
             <a href="createpost">create a new post</a>
             <br>
             <a href="/category/create">create new category</a>

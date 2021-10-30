@@ -12,19 +12,45 @@
 @include('partials.alerts')
 
 <article>
+    <div>
     <h1>
         <p>
             {{ $post->title }}
         </p>
     </h1>
-    <div>
         <p>{{ $post->content }}</p>
         <p>this is post number {{ $post->id }}</p>
-
+        <p>deze post heeft {{ count($likes) - count($dislikes) }} @if(count($dislikes) > count($likes)) dislikes @else likes @endif</p>
     </div>
+
+    @auth()
+        <form action="/like">
+            @csrf
+            <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+            <input type="hidden" name="post_id" value="{{$post->id}}">
+            <input type="hidden" name="ispositive" value="1">
+            <input type="submit" value="like">
+        </form>
+        <form action="/like">
+            @csrf
+            <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+            <input type="hidden" name="post_id" value="{{$post->id}}">
+            <input type="hidden" name="ispositive" value="0">
+            <input type="submit" value="dislike">
+        </form>
+        <form action="/clearlike">
+            @csrf
+            <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+            <input type="hidden" name="post_id" value="{{$post->id}}">
+            <input type="submit" value="clear your like/dislike">
+        </form>
+    @else
+        <p> <a href="/login">login</a> om deze post een like/dislike te geven! </p>
+    @endauth
+
     <div>
         @if($categories->first())
-            <p>This post has the following categories</p>
+            <p>Deze post heeft de volgende categorieen</p>
             @foreach($categories as $category)
                 <p> {{ $category->name }}</p>
             @endforeach
@@ -32,11 +58,11 @@
     </div>
     <div>
         @auth()
-        @if(Auth::user()->is_admin)
-            <p>
-                Hi admin, <a href="/editpost/{{ $post->id }}">Edit this post</a>.
-            </p>
-        @endif
+            @if(Auth::user()->is_admin)
+                <p>
+                    Hi admin, <a href="/editpost/{{ $post->id }}">Edit this post</a>.
+                </p>
+            @endif
         @endauth
     </div>
     <div>
@@ -60,14 +86,12 @@
                     <input type="submit">
                 </form>
                 @else
-                    <p>You must be registered longer than 1 day to make comment!</p>
+                    <p>Je moet minimaal 3 likes hebben mocht je een comment willen plaatsen!</p>
                 @endif
         @endauth
     </div>
     <div>
-        <a href="/posts">
-            go back
-        </a>
+        <a href="/posts">go back</a>
     </div>
     <div>
         <h2>comments</h2>
@@ -82,7 +106,6 @@
             <br>
         @endforeach
     </div>
-
 </article>
 </body>
 </html>

@@ -50,6 +50,10 @@ class Post extends Model
         return $this->belongsToMany(Category::class)->withPivot(['post_id', 'category_id']);
     }
 
+    public function likes(){
+        return $this->belongsToMany(Like::class);
+    }
+
     protected $fillable= [
             'title',
             'content',

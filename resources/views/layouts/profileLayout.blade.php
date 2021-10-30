@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css')  }}">
 </head>
 <body>
+    @include('partials.alerts')
     @yield('user.profile')
     @yield('user.editProfile')
 

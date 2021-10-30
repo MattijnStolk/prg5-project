@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Comment;
+use App\Models\Like;
 use App\Models\Post;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,23 +18,26 @@ class PostController extends Controller
 
     function show($id) {
         $allowedComment = 0;
-        // toont details van een Post
+        $likes = array();
+        $dislikes = array();
+
         $post = Post::where('id', '=', $id)->where('is_active', '=', 1)->firstOrFail();
         $categories = $post->categories;
         $comments = $post->comments;
+        $result = Like::where('post_id', $id)->get();
+
+        foreach ($result as $like) {
+            if ($like->is_positive == 1) array_push($likes, $like->is_positive);
+            elseif ($like->is_positive == 0) array_push($dislikes, $like->is_positive);
+        }
 
         if (Auth::check()){
-
-            $data = User::where('id', '=', Auth::user()->id)
-                ->where('created_at', '<=', Carbon::now()->subDays(2)->toDateTimeString())
-                ->get();
-
-            if ($data->first()){
+            if (Like::where('user_id', Auth::user()->id)->count() >= 3){
                 $allowedComment = 1;
             }
         }
 
-        return view('posts.post', compact('post', 'comments', 'categories', 'allowedComment'));
+        return view('posts.post', compact('post', 'comments', 'categories', 'allowedComment', 'likes', 'dislikes'));
     }
     function showAllPosts(){
         $posts =  Post::where('is_active', '=', 1)->get();
@@ -114,7 +117,6 @@ class PostController extends Controller
     {
         if (!Auth::check() || !Auth::user()->is_admin) return redirect('posts');
         $post = Post::findOrFail($id);
-
 
         return view('admin/editPost', compact('post'));
     }
