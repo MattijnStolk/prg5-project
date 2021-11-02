@@ -70,7 +70,7 @@ class PostController extends Controller
 
     function searchPost(Request $request){
         $searchResult = $request->get('search');
-        if(isset($searchResult) && $searchResult !== ' '){
+        if(isset($searchResult) && $searchResult !== ''){
             $categories = Category::all();
 
             $contentQuery = Post::where('content', 'LIKE', '%'. $searchResult. '%');
